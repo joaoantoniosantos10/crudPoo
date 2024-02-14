@@ -47,6 +47,8 @@
                 return $this->conn->query($sql);
         }
 
+
+        
         public function getUsuario(int $id): ? array {
                 $retorno = null;
 

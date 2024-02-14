@@ -6,20 +6,22 @@
 
         private DatabaseConnection $databaseConnection;
         private mysqli $conn;
+        public $estoque;
+        private array $filters;
 
-        public function __construct()
+        public function __construct(array $filters)
         {
             $this->databaseConnection = new DatabaseConnection();
             $this->conn = $this->databaseConnection->getConnection();
+            $this->filters = $filters;
         }
+            public $filtro;
 
-            
-        #bora dar um fecht object e quando formos no objecto listarmos dado das duas tabelas e dar um join no final;
 
-        public function getEstoques(array $filtros): array
+        public function getEstoques($filters,$filtro): array
         {
             $sql = $this->getSelectEstoques();
-            foreach($filtros as $filtro => $valor) 
+            foreach($filters as $filter => $valor) 
             {
                 $sql .= " " . "Where " . $filtro . " = " . $valor;
             }
@@ -52,9 +54,7 @@
             ];
         }
 
-
-        private function getSelectEstoques(): string
-        {
+        private function getSelectEstoques(): string{
             $sql = "SELECT p.id,
                            p.nome,
                            COALESCE(
@@ -69,7 +69,6 @@
                     ";
             return $sql;
         }
-
 }
 
 ?>
