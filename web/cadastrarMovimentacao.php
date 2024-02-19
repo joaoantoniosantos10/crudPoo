@@ -1,7 +1,7 @@
 <?php
  include_once("HTML/head.php");
  include_once("REPOSITORY/produtoRepository.php");
- include_once("REPOSITORY/tipoMovimentacaoEnum.php");
+ include_once("REPOSITORY/ENUM/tipoMovimentacaoEnum.php");
   $produtoRepository = new ProdutoRepository();
  $produtos = $produtoRepository->getProdutos();
 ?>

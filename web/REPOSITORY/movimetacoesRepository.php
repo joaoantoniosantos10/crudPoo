@@ -15,7 +15,7 @@ class MovimentacoesRepository{
         $produto_id,
         $qtd, 
         string $tipo): bool{
-        $sql = "INSERT INTO movimentacoes (produto_id, qtd, tipo) VALUES ('$produto_id', '$qtd', '$tipo')";
+        $sql = "INSERT INTOmovimentacoes (produto_id, qtd, tipo) VALUES ('$produto_id', '$qtd', '$tipo')";
        return $this->conn->query($sql);
 }
 

@@ -1,75 +1,85 @@
-<i class="alert alert-sucess">include on</i>
-<?php 
-    include_once("./CONNECTION/DatabaseConnection.php");
- 
-    class EstoqueRepository{
+<div class="alert alert-primary" role="alert">
+    inluiu o repositorio!!!!!!!
+</div>
+<?php
+include_once("./CONNECTION/DatabaseConnection.php");
 
-        private DatabaseConnection $databaseConnection;
-        private mysqli $conn;
+class EstoqueRepository{
 
-        public function __construct()
-        {
-            $this->databaseConnection = new DatabaseConnection();
-            $this->conn = $this->databaseConnection->getConnection();
-        }
+    private DatabaseConnection $databaseConnection;
+    private mysqli $conn;
+    private $filter;
+    public $estoque;
+    private array $filters;
+    public int $count =0;
 
-            
-        #bora dar um fecht object e quando formos no objecto listarmos dado das duas tabelas e dar um join no final;
+    public function __construct(array $filters)
+    {
+        $this->databaseConnection = new DatabaseConnection();
+        $this->conn = $this->databaseConnection->getConnection();
+        $this->filters = $filters;
+    }
 
-        public function getEstoques(array $filtros): array
-        {
-            $sql = $this->getSelectEstoques();
-            foreach($filtros as $filtro => $valor) 
-            {
-                $sql .= " " . "Where " . $filtro . " = " . $valor;
+    public function getEstoques(): array
+    {
+        #geral
+        $sql = $this->getSelectEstoques();
+        $sql .= "GROUP BY p.id, p.nome";
+        $res = $this->conn->query($sql);
+        $estoques = [];
+        while($row = $res->fetch_object()){
+            $estoques[] = $this->convertObjectToArray($row);}
+        return $estoques;
+    }
+
+    public function getFiltros(){
+
+        $sql = $this->getSelectEstoques();
+            #Aqui é um foreach pra trazer varios where
+        foreach ($filters as $filter => $valor){
+            if($count = 0){
+                $choice = "Where";
+            }else{
+                $choice = "and";
             }
- 
-            $sql .= "GROUP BY p.id, p.nome";
-
-            $res = $this->conn->query($sql);
-            $estoques = [];
-            while($row = $res->fetch_object()){
-            $estoques[] = $this->convertObjectToArray($row);
-            while($row = $res->fetch_object()){
-                $estoques[] = $this->convertObjectToArray($row);
-            }
-            }
-            return $estoques;
+            $sql.= "$choice $filter => $valor";
+            $count ++;
         }
+        $sql.= "GROUP BY p.id, p.nome";
+        $res = $this->conn->query($sql);
+        #the work with convertObject
+        $filtros = [];
+        while($row = $res->fetch_object()){
+            $filtros[] = $this->convertObjectToArray($row);}
+        return $filtros;
+    }
 
-        private function convertObjectToArray(object $object): array
-        {
-            $saidas = $object->saidas;
-            $entradas = $object->entradas;
-            $estoque = $entradas - $saidas;
+    public function convertObjectToArray(object $object):array
+    {
+        return[
+            "p.id" => $object->id,
+            "p.nome" => $object->nome,
+            "entradas" => $object->entradas,
+            "saidas" => $object->saidas,
+            "estoque" => $object->entradas - $object->saidas,
+        ];
+    }
 
-            return[
-                "p.id" => $object->id,
-                "p.nome" => $object->nome,
-                "entradas" => $object->entradas,
-                "saidas" => $object->saidas,
-                "estoque" => $estoque,
-            ];
-        }
-
-
-        private function getSelectEstoques(): string
-        {
-            $sql = "SELECT p.id,
-                           p.nome,
-                           COALESCE(
-                            SUM(CASE WHEN m.tipo = 1 THEN
-                             m.qtd 
-                             END) , 0) as entradas,
-                            COALESCE(
-                                SUM(CASE WHEN  m.tipo = 2 THEN
-                                 m.qtd END), 0) as saidas
-                    FROM produtos p
-                    JOIN movimentacoes m ON m.produto_id = p.id
-                    ";
-            return $sql;
-        }
-
+    public function getSelectEstoques(){
+        $sql = "
+        SELECT
+           p.id,
+        p.nome,
+          COALESCE(SUM(CASE WHEN m.tipo = 1 THEN m.qtd END),0) as entradas,
+          COALESCE(SUM(CASE WHEN m.tipo = 2  THEN m.qtd END),0) as saidas
+            FROM
+                produtos p 
+            JOIN 
+                 movimentacoes m on 
+                    m.produto_id = p.id
+           ";
+        return $sql;
+    }
 }
 
-?>
+    ?>

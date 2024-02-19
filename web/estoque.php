@@ -1,15 +1,16 @@
 <?php include_once("HTML/head.php");
-include_once("REPOSITORY/estoqueRepositoryteste.php");
-
+include_once("REPOSITORY/estoqueRepository.php");
 $nome = $_GET["nome"];
 $id = $_GET["id"];
-$filters = ['id' => $id, 'nome' => $nome];
-$estoqueRepository = new EstoqueRepository($filters);
+
+#criando nosso array e já passando pelo construct;
 $filter = [];
 $filters = [$id, $nome];
-
-#verificar esse objeto
-#$estoques = $estoqueRepository->getEstoques();
+$filters = ['id' => $id, 'nome' => $nome];
+#
+$estoqueRepository = new EstoqueRepository($filters);
+$estoques = $estoqueRepository->getEstoques();
+$filtros = $estoqueRepository->getFiltros();
 ?>
         <div style="padding: 3em;">
    <div style="display: flex; justify-content: space-between; align-items:center; padding: 1em;">
@@ -17,33 +18,34 @@ $filters = [$id, $nome];
 </div>
 
 
+<div class ="aside">
+    <form action="estoque.php" method="get" style="display: flex; justify-content: space-around;" id="filtro">
 
- <form action="estoque.php" method="get" style="display: flex; justify-content: space-around;" id="filtro"> 
-
-        <aside style="display:flex; flex-direction:row; gap: 10em;"> 
-     <div style="display:flex; flex-direction:column;">
-            <label for="id" nome>Id</label>
-            <input type="text" name="id" id="">
-       </div>
-       <div style="display:flex; flex-direction:column;">
-            <label for="nome" nome>Nome</label>
-            <input type="text" name="nome" id="">
-       </div>
-       </aside>
+        <div style="display:flex; flex-direction:row; gap: 10em;">
+            <div style="display:flex; flex-direction:column;">
+                <label for="id" >Id</label>
+                <input type="text" name="id" id="id">
+            </div>
+            <div style="display:flex; flex-direction:column;">
+                <label for="nome">Nome</label>
+                <input type="text" name="nome" id="nome">
+            </div>
+        </div>
         <button class="btn btn-success">Filtrar</button>
     </form>
-    
 
-       
-  <table style="padding: 5em;" class="table">
+
+
+    <table style="padding: 5em;" class="table">
         <thead class="table-light">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">nome</th>
-                <th scope="col">estoque</th>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">nome</th>
+            <th scope="col">estoque</th>
 
-            </tr>
+        </tr>
         </thead>
+</div>
 <!-- listagem -->
         
         <?php 
@@ -71,7 +73,7 @@ $filters = [$id, $nome];
     <?php foreach($estoques as $estoque){ ?>
          <tbody>
             <tr>
-                <td> <?php echo $estoque["id"];?></td>
+                <td> <?php echo $estoque["p.id"];?></td>
                 <td> <?php echo $estoque["p.nome"];?></td>
                 <td> <?php echo $estoque["estoque"];?></td>
             </tr>
@@ -84,9 +86,7 @@ $filters = [$id, $nome];
          <?php }
          exit();
             }?>
-
        </table>
-
 
         <?php
         if(empty($estoques)){?>

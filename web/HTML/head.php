@@ -21,8 +21,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
     <li class="nav-item">
-    <a href="index.php" class="nav-link active" href="index.php">Home</a>
-    </li>
+  
     <li class="nav-item">
     <a class="nav-link" href="Categorias.php">Categorias</a>
     </li>

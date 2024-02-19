@@ -1,3 +1,5 @@
+<H1>PEGOU</H1>
+
 <?php 
 
     include_once("./CONNECTION/DatabaseConnection.php");
