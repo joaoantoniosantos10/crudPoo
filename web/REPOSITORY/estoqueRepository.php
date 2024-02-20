@@ -8,23 +8,18 @@ class EstoqueRepository{
 
     private DatabaseConnection $databaseConnection;
     private mysqli $conn;
-    private $filter;
-    public $estoque;
-    private array $filters;
-    public int $count =0;
+    private $estoque;
 
-    public function __construct(array $filters)
-    {
+    public function __construct(){
         $this->databaseConnection = new DatabaseConnection();
         $this->conn = $this->databaseConnection->getConnection();
-        $this->filters = $filters;
+
     }
 
-    public function getEstoques(): array
+    public function getEstoques($nome, $id): array
     {
         #geral
-        $sql = $this->getSelectEstoques();
-        $sql .= "GROUP BY p.id, p.nome";
+        $sql = $this->getSelectEstoques($nome,$id);
         $res = $this->conn->query($sql);
         $estoques = [];
         while($row = $res->fetch_object()){
@@ -32,27 +27,6 @@ class EstoqueRepository{
         return $estoques;
     }
 
-    public function getFiltros(){
-
-        $sql = $this->getSelectEstoques();
-            #Aqui é um foreach pra trazer varios where
-        foreach ($filters as $filter => $valor){
-            if($count = 0){
-                $choice = "Where";
-            }else{
-                $choice = "and";
-            }
-            $sql.= "$choice $filter => $valor";
-            $count ++;
-        }
-        $sql.= "GROUP BY p.id, p.nome";
-        $res = $this->conn->query($sql);
-        #the work with convertObject
-        $filtros = [];
-        while($row = $res->fetch_object()){
-            $filtros[] = $this->convertObjectToArray($row);}
-        return $filtros;
-    }
 
     public function convertObjectToArray(object $object):array
     {
@@ -66,6 +40,10 @@ class EstoqueRepository{
     }
 
     public function getSelectEstoques(){
+
+        global $nome;
+        global $id;
+
         $sql = "
         SELECT
            p.id,
@@ -78,6 +56,25 @@ class EstoqueRepository{
                  movimentacoes m on 
                     m.produto_id = p.id
            ";
+
+        $filtros = [];
+
+        if (!empty($nome) && empty($id)) {
+            $filtros[] = "p.nome like '%$nome%'";
+        }
+
+        if (!empty($id) && empty($nome)) {
+            $filtros[] = "p.id = '$id'";
+        }
+        #caso os dois;
+        if (!empty($id) && !empty($nome)){
+            $filtros[] = "p.nome like '%$nome%' and p.id = '$id'";
+        }
+        if (!empty($filtros)) {
+            $sql .= " WHERE " . implode(" ", $filtros);
+        }
+
+        $sql.= "GROUP BY p.id, p.nome";
         return $sql;
     }
 }

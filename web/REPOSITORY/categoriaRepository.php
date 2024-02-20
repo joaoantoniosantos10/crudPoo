@@ -18,9 +18,9 @@
         return $this->conn->query($sql);
     }
 
-
     #triplice da listagem
-    public function getCategorias(): array {
+    public function getCategorias($pagina): array {
+
         $sql = $this->getSelectCategorias();
         $res = $this->conn->query($sql);
         #crio um array
@@ -38,11 +38,21 @@ private function convertObjectToArray(object $object): array {
         ];
 }
 
+public function quantidade(){
+    #PAGINACAO
+    $total = "SELECT count(id) FROM categorias";
+    $consulta = $this->conn->query($total);
+    $row = $consulta->fetch_object();
+}
+
+
+
 private function getSelectCategorias($id = null) {
-        $sql = "SELECT * FROM categorias";
-        if($id != null) {
-                $sql .= " WHERE id = ". $id;
-        }
+        global $pagina;
+        $limite = 5;
+        $inicio = ($pagina * $limite) - 5;
+
+    $sql = "SELECT * FROM categorias";
         return $sql;
 }
 
