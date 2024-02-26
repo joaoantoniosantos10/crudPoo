@@ -19,11 +19,11 @@
 
     public function editarCategorias(
         string $nome, int $id):bool{
-        $sql = "UPDATE * FROM categorias WHERE id='$id'"
+        $sql = "UPDATE * FROM categorias SET nome = '$nome' WHERE id='$id'";
         return $this->conn->query($sql);
     }
 
-    public function getCategorias($pagina): array {
+    public function getCategorias($pagina, $id): array {
         $sql = $this->getSelectCategorias();
         $res = $this->conn->query($sql);
         $categorias = [];
@@ -32,18 +32,14 @@
         }
         return $categorias;
 }
-
-public  function ListforProduct()
-{
-    $sql = "SELECT * FROM categorias";
-    $res = $this->conn->query($sql);
-    $categorias = [];
-    while($row = $res->fetch_object()) {
-        $categorias[] = $this->convertObjectToArray($row);
-    }
-    return $categorias;
-}
-
+        public function quantidade(){
+            #PAGINACAO
+            $total = "SELECT count(id) as cont FROM categorias";
+            $consulta = $this->conn->query($total);
+            $row = $consulta->fetch_object();
+            $nova = $this->convertObjectToArray($row);
+            return $nova;
+        }
         private function convertObjectToArray(object $object): array {
         return [
         "id" => $object->id,
@@ -51,21 +47,20 @@ public  function ListforProduct()
         "cont" => $object->cont,
         ];
 }
-    public function quantidade(){
-    #PAGINACAO
-    $total = "SELECT count(id) as cont FROM categorias";
-    $consulta = $this->conn->query($total);
-    $row = $consulta->fetch_object();
-    $nova = $this->convertObjectToArray($row);
-    return $nova;
-    }
 
-
-
-    private function getSelectCategorias($id = null) {
+        private function getSelectCategorias() {
+        global $id;
         global $pagina;
-        $inicio = (5 * $pagina)-5;
-        $sql = "SELECT * FROM categorias  ORDER BY Id LIMIT 5 offset $inicio";
+        if($pagina != 0){
+            $inicio = (5 * $pagina)-5;
+            $sql = "SELECT * FROM categorias  ORDER BY Id LIMIT 5 offset $inicio";
+        }
+        else{
+            $sql = "SELECT * FROM categorias";
+        }
+        if($id != null) {
+            $sql .= " WHERE id = ". $id;
+        }
         return $sql;
     }
 }

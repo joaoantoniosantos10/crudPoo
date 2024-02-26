@@ -47,11 +47,8 @@
                 return $this->conn->query($sql);
         }
 
-
-        
         public function getUsuario(int $id): ? array {
                 $retorno = null;
-
                 #  2 . Passamos um paramêtro o id
                 $sql = $this->getSelectUser($id);
                 $res = $this->conn->query($sql);

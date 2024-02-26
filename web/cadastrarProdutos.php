@@ -1,7 +1,8 @@
 <?php include_once("HTML/head.php");
       include_once("REPOSITORY/categoriaRepository.php");
       $categoriaRepository = new CategoriaRepository();
-      $categorias = $categoriaRepository->listForProduct();
+    $pagina =0;
+    $categorias = $categoriaRepository->getCategorias($pagina);
 ?>
 
 <?php if(!empty($categorias)){ ?>
