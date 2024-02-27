@@ -7,7 +7,7 @@
 
 <?php if(!empty($categorias)){ ?>
 
-  <form style="padding: 4em;" action="salvarProdutos.php" method="POST">
+  <form style="padding: 4em;" action="SALVAR/salvarProdutos.php" method="POST">
 
 <div class="row mb-3">
 

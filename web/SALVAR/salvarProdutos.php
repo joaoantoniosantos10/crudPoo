@@ -1,8 +1,8 @@
- <?php include_once("HTML/head.php"); ?>
+ <?php  ?>
 <h1>Salvar produtos</h1>
 <?php
 ################################REVISAR##########################################################
-    include_once("REPOSITORY/produtoRepository.php");
+include_once("../includes.php");
     try{
         $nome = $_POST["nome"];
         $categoria_id = $_POST["id"];
@@ -16,8 +16,5 @@
         echo "<script>location.href='cadastrarProdutos.php';</script>"; 
       }
      exit();
-
-     include_once("HTML/footer.php");
-  
    
 ?>

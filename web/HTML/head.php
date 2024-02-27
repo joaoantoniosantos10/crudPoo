@@ -26,7 +26,7 @@
     <a class="nav-link" href="Categorias.php">Categorias</a>
     </li>
     <li class="nav-item">
-    <a class="nav-link" href="cadastrarProdutos.php">Produto</a>
+    <a class="nav-link" href="Produtos.php">Produto</a>
     </li>
     <li class="nav-item">
     <a class="nav-link" href="movimentacoes.php">Movimentações</a>

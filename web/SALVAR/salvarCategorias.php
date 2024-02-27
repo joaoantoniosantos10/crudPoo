@@ -1,7 +1,7 @@
 <h1>Salvar categorias</h1>
 
 <?php
-    include_once("REPOSITORY/categoriaRepository.php");
+    include_once("../includes.php");
 
     try{
        $nome = $_POST["nome"];

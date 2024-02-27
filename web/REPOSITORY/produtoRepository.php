@@ -22,7 +22,7 @@
     }
 
         #triplice da listagem
-    public function getProdutos(): array{
+    public function getProdutos($pagina): array{
         $sql = $this->getSelectProdutos();
         $res = $this->conn->query($sql);
         #criar array
@@ -40,13 +40,21 @@
        ];
     }
 
-    private function getSelectProdutos($id = null){
-        $sql = "SELECT * FROM produtos";
-        if($id != null){
-            $sql .= "WHERE id =". $id;
+   private function getSelectProdutos()
+    {
+        global $pagina;
+        if (($pagina != 0) || ($id = null)) {
+            $inicio = (5 * $pagina) - 5;
+            $sql = "SELECT * FROM produtos  ORDER BY Id LIMIT 5 offset $inicio";
+        } else {
+            $sql = "SELECT * FROM produtos";
+        }
+        if ($id != null) {
+            $sql .= " WHERE id = " . $id;
         }
         return $sql;
     }
+
 
 
 

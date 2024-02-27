@@ -8,7 +8,7 @@
 
 <?php if(!empty($produtos)) {?>
 
-    <form style="padding: 2em;" action="salvarMovimentacao.php" method="post">
+    <form style="padding: 2em;" action="SALVAR/salvarMovimentacao.php" method="post">
     <select required ="form-control mb-3" name="produto_id" id="">
     <option selected> Selecione o produto </option>
     <?php

@@ -1,9 +1,9 @@
   <?php include_once("HTML/head.php");
   include_once("REPOSITORY/categoriaRepository.php");
+  $id = null;
   $categoriaRepository = new CategoriaRepository();
   $pagina =(isset($_GET['pagina'])) ? (int)$_GET['pagina'] : 1;
-  $id = 0;
-  $categorias = $categoriaRepository->getCategorias($pagina, $id);
+  $categorias = $categoriaRepository->getCategorias($pagina);
   $quantidade = $categoriaRepository->quantidade();
   include_once("PAGINACAO/paginacao.php");
 
@@ -33,8 +33,12 @@
             <tr>
                 <td> <?php echo $categoria["id"];?></td>
                 <td> <?php echo $categoria["nome"];?></td>
-                <td><form  action="editarCategoria.php" method="post"> <input name="id" type="hidden" value="<?php echo $categoria["id"];?>"> <input class="btn btn-success" type="submit" placeholder="Editar"></form></td>
-                <td><a class="btn btn-danger" href="">Deletar</a></td>
+                <td>
+                    <a href="editarCategoria.php?id=<?php echo $categoria["id"]; ?>" class="btn btn-success">Editar</a>
+                </td>
+                <td>
+                    <a href="DELETE/deletarCategoria.php?id=<?php echo $categoria["id"]; ?>" class="btn btn-danger">Deletar</a>
+                </td>
             </tr>
         </tbody>
          <?php } ?>

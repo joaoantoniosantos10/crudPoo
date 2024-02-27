@@ -1,5 +1,5 @@
-<?php include_once("HTML/head.php");
-include_once("REPOSITORY/movimetacoesRepository.php");
+<?php ;
+include_once("../includes.php");
 
 try{
      $produto_id = $_POST["produto_id"];
@@ -17,5 +17,5 @@ try{
 }
 
 
- include_once("HTML/footer.php"); 
+;
 ?>
