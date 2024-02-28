@@ -1,4 +1,3 @@
-<H1>PEGOU</H1>
 
 <?php 
 
@@ -21,8 +20,21 @@
         return $this->conn->query($sql);
     }
 
-        #triplice da listagem
-    public function getProdutos($pagina): array{
+        public function editarProdutos(
+            string $nome, int $categoria_id
+            int $id): bool
+        {
+            $sql = "UPDATE categorias SET nome = '$nome' WHERE id = '$id'";
+            return $this->conn->query($sql);
+        }
+
+        public function deletarProdutos(int $id): bool
+        {
+            $sql = "DELETE FROM categorias WHERE id = '$id'";
+            return $this->conn->query($sql);
+        }
+
+        public function getProdutos($pagina): array{
         $sql = $this->getSelectProdutos();
         $res = $this->conn->query($sql);
         #criar array

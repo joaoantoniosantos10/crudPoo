@@ -9,18 +9,20 @@ include_once ("REPOSITORY/categoriaRepository.php");
     <div style="display: flex; justify-content:center;" class="row mb-3">
         <div class="mb-3">
             <input required type="text" class="form-control container-sm" placeholder="Categoria" name="nome"  aria-label="First name">
-            <input type="hidden" name="id" value="<?php echo $id = $_POST["id"];?>">
+            <input type="hidden" name="id" value="<?php echo $id = $_GET["id"];?>">
         </div>
         <div>
-            <button class="btn btn-primary" >Editar </button>
+            <input type="submit" class="btn btn-primary" value="Editar">
         </div>
     </div>
 </form>
 
 <?php
+
 try{
-    $categoriaRepository = new CategoriaRepository();
+    $id = $_POST["id"];
     $nome = $_POST["nome"];
+    $categoriaRepository = new CategoriaRepository();
     $editar = $categoriaRepository->editarCategorias($nome, $id);
     echo  "<script> alert('Editado com sucesso');</script>";
     echo "<script>location.href='Categorias.php';</script>";
