@@ -1,3 +1,6 @@
+<div class="alert alert-primary" role="alert">
+    Repository-on
+</div>
 
 <?php 
 
@@ -21,7 +24,7 @@
     }
 
         public function editarProdutos(
-            string $nome, int $categoria_id
+            string $nome, int $categoria_id,
             int $id): bool
         {
             $sql = "UPDATE categorias SET nome = '$nome' WHERE id = '$id'";
@@ -30,7 +33,7 @@
 
         public function deletarProdutos(int $id): bool
         {
-            $sql = "DELETE FROM categorias WHERE id = '$id'";
+            $sql = "DELETE FROM produtos WHERE id = '$id'";
             return $this->conn->query($sql);
         }
 
@@ -66,12 +69,7 @@
         }
         return $sql;
     }
-
-
-
-
-
   
 }
-
 ?>
+

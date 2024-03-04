@@ -19,11 +19,12 @@ include_once ("REPOSITORY/categoriaRepository.php");
 
 <?php
 
+
 try{
     $id = $_POST["id"];
     $nome = $_POST["nome"];
     $categoriaRepository = new CategoriaRepository();
-    $editar = $categoriaRepository->editarCategorias($nome, $id);
+    $eeditar = $categoriaRepository->editarCategorias($nome, $id);
     echo  "<script> alert('Editado com sucesso');</script>";
     echo "<script>location.href='Categorias.php';</script>";
 } catch (Exception $e){

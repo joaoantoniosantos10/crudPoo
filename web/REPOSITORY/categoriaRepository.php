@@ -1,3 +1,7 @@
+<div class="alert alert-primary" role="alert">
+    Repository-on
+</div>
+
 <?php
 include_once("web/CONNECTION/DatabaseConnection.php");
 
@@ -20,15 +24,15 @@ class CategoriaRepository
 
     public function editarCategorias(
         string $nome,
-        int    $id): bool
+        int $id): bool
     {
         $sql = "UPDATE categorias SET nome = '$nome' WHERE id = '$id'";
         return $this->conn->query($sql);
     }
 
-    public function deletarCategorias(int $id): bool
+    public function deletarCategorias($id): bool
     {
-        $sql = "DELETE FROM categorias WHERE id = '$id'";
+        $sql = "UPDATE categorias SET deletado = '1' WHERE id = '$id'";
         return $this->conn->query($sql);
     }
 
@@ -60,6 +64,7 @@ class CategoriaRepository
             "id" => $object->id,
             "nome" => $object->nome,
             "cont" => $object->cont,
+            "deletado" => $object->deletado,
         ];
     }
 
@@ -80,3 +85,5 @@ class CategoriaRepository
 }
 
 ?>
+
+

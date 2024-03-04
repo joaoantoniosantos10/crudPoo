@@ -1,6 +1,5 @@
 <?php
 include_once("HTML/head.php");
-
 include_once("REPOSITORY/produtoRepository.php");
 
 $produtoRepository = new ProdutoRepository();
@@ -55,9 +54,6 @@ include_once("PAGINACAO/paginacao.php");
 <?php
 include_once("HTML/footer.php");
 ?>
-
-
-
 
 <?php
 include_once("HTML/footer.php");

@@ -33,6 +33,7 @@ $categorias = $categoriaRepository->getCategorias($pagina);
 
 
 <?php
+
 try{
     $id = $_POST["id"];
     $categoria = $_POST["categoria_id"];

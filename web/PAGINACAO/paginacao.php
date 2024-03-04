@@ -1,4 +1,5 @@
 <?php
+
 $totalPagina = ceil($quantidade["cont"] / 5);
 $anterior = (($pagina - 1) == 0)? 1 : $pagina -1;
 $posterior = (($pagina +1) >= $totalPagina) ? $totalPagina : $pagina+1;

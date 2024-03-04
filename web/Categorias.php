@@ -3,8 +3,8 @@
   $id = null;
   $categoriaRepository = new CategoriaRepository();
   $pagina =(isset($_GET['pagina'])) ? (int)$_GET['pagina'] : 1;
-  $categorias = $categoriaRepository->getCategorias($pagina);
-  $quantidade = $categoriaRepository->quantidade();
+  $categorias = $categoriaRepository->getCategorias($pagina); #
+  $quantidade = $categoriaRepository->quantidade(); #COUNT
   include_once("PAGINACAO/paginacao.php");
 
   ?>
@@ -30,16 +30,20 @@
 
         <?php foreach($categorias as $categoria){ ?>
         <tbody>
-            <tr>
-                <td> <?php echo $categoria["id"];?></td>
-                <td> <?php echo $categoria["nome"];?></td>
-                <td>
-                    <a href="editarCategoria.php?id=<?php echo $categoria["id"]; ?>" class="btn btn-success">Editar</a>
-                </td>
-                <td>
-                    <a href="DELETE/deletarCategoria.php?id=<?php echo $categoria["id"]; ?>" class="btn btn-danger">Deletar</a>
-                </td>
-            </tr>
+         <?php if(empty($categoria["deletado"])){  ?>
+
+             <tr>
+                 <td> <?php echo $categoria["id"];?></td>
+                 <td> <?php echo $categoria["nome"];?></td>
+                 <td>
+                     <a href="editarCategoria.php?id=<?php echo $categoria["id"]; ?>" class="btn btn-success">Editar</a>
+                 </td>
+                 <td>
+                     <a href="DELETE/deletarCategoria.php?id=<?php echo $categoria["id"]; ?>" class="btn btn-danger">Deletar</a>
+                 </td>
+             </tr>
+
+         <?php }?>
         </tbody>
          <?php } ?>
        </table>
