@@ -30,16 +30,18 @@ include_once("PAGINACAO/paginacao.php");
 
         <?php foreach($produtos as $produto){ ?>
             <tbody>
-            <tr>
-                <td> <?php echo $produto["id"];?></td>
-                <td> <?php echo $produto["nome"];?></td>
-                <td>
-                    <a href="editarProdutos.php?id=<?php echo $produto["id"]; ?>" class="btn btn-success">Editar</a>
-                </td>
-                <td>
-                    <a href="DELETE/deletarProduto.php?id=<?php echo $produto["id"]; ?>" class="btn btn-danger">Deletar</a>
-                </td>
-            </tr>
+            <?php if(empty($produto["deletado"])){ ?>
+                <tr>
+                    <td> <?php echo $produto["id"];?></td>
+                    <td> <?php echo $produto["nome"];?></td>
+                    <td>
+                        <a href="editarProdutos.php?id=<?php echo $produto["id"]; ?>" class="btn btn-success">Editar</a>
+                    </td>
+                    <td>
+                        <a href="DELETE/deletarProduto.php?id=<?php echo $produto["id"]; ?>" class="btn btn-danger">Deletar</a>
+                    </td>
+                </tr>
+            <?php } ?>
             </tbody>
         <?php } ?>
     </table>

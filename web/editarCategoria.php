@@ -24,7 +24,7 @@ try{
     $id = $_POST["id"];
     $nome = $_POST["nome"];
     $categoriaRepository = new CategoriaRepository();
-    $eeditar = $categoriaRepository->editarCategorias($nome, $id);
+    $editar = $categoriaRepository->editarCategorias($nome, $id);
     echo  "<script> alert('Editado com sucesso');</script>";
     echo "<script>location.href='Categorias.php';</script>";
 } catch (Exception $e){

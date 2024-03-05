@@ -3,7 +3,8 @@
  include_once("REPOSITORY/produtoRepository.php");
  include_once("REPOSITORY/ENUM/tipoMovimentacaoEnum.php");
   $produtoRepository = new ProdutoRepository();
- $produtos = $produtoRepository->getProdutos();
+  $pagina = 0;
+ $produtos = $produtoRepository->getProdutos($pagina);
 ?>
 
 <?php if(!empty($produtos)) {?>
@@ -18,7 +19,7 @@
     </select>
     <div>
         <label for="qtd">Quantidade</label>
-        <input required class="form-control mb-4"  type="qtd" name="qtd" id="qtd">
+        <input required class="form-control mb-4"  type="number" name="qtd" id="qtd">
     </div>
 
     <select required ="form-control mb-3" name="tipo" id="">

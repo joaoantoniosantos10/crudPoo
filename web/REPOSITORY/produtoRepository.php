@@ -31,11 +31,12 @@
             return $this->conn->query($sql);
         }
 
-        public function deletarProdutos(int $id): bool
+        public function deletarProdutos($id): bool
         {
-            $sql = "DELETE FROM produtos WHERE id = '$id'";
+            $sql = "UPDATE produtos SET deletado = '1' WHERE id = '$id'";
             return $this->conn->query($sql);
         }
+
 
         public function getProdutos($pagina): array{
         $sql = $this->getSelectProdutos();
@@ -52,6 +53,7 @@
        return [
         "id" => $object->id,
         "nome" => $object->nome,
+          "deletado" => $object->deletado,
        ];
     }
 

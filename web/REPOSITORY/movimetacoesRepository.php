@@ -3,7 +3,7 @@
 </div>
 
 <?php
-include_once("CONNECTION/DatabaseConnection.php");
+include_once("../CONNECTION/DatabaseConnection.php");
 class MovimentacoesRepository{
 
     private DatabaseConnection $dataBaseConnection;
@@ -14,16 +14,26 @@ class MovimentacoesRepository{
         $this->conn = $this->dataBaseConnection->getConnection();
 }
 
-    public function cadastrarMovimentacoes(
-        $produto_id,
-        $qtd, 
-        string $tipo): bool{
-        $sql = "INSERT INTOmovimentacoes (produto_id, qtd, tipo) VALUES ('$produto_id', '$qtd', '$tipo')";
+       public function cadastrarMovimentacoes(
+        int $produto_id,
+        int $qtd,
+        int $tipo): bool{
+        $sql = "INSERT INTO movimentacoes (produto_id, qtd, tipo) VALUES ('$produto_id', '$qtd', '$tipo')";
        return $this->conn->query($sql);
 }
 
-       #triplice da listagem
-       public function getMovimentacoes(): array {
+     public function editarMovimentacoes(
+          int $id,
+          int $produto_id,
+          int $qtd,
+          int $tipo
+        ): bool
+    {
+        $sql = "UPDATE movimentacoes SET produto_id ='$produto_id', qtd ='$qtd', tipo ='$tipo' WHERE id = '$id'";
+        return $this->conn->query($sql);
+    }
+
+        public function getMovimentacoes(): array {
         $sql = $this->getSelectMovimentacoes();
         $res = $this->conn->query($sql);
         #crio um array
@@ -34,6 +44,19 @@ class MovimentacoesRepository{
         return $movimentacoes;
 }
 
+
+        public function getMovimentacao(int $id): array {
+        $sql = "SELECT * FROM movimentacoes WHERE id ='$id'";
+        $res = $this->conn->query($sql);
+        $movimentacoes = $res->fetch_object();
+
+        if($movimentacoes){
+            $retorno = $this->convertObjectToArray($movimentacoes);
+        }
+        return $retorno;
+    }
+
+
         private function convertObjectToArray(object $object): array {
                 return [
                 "id" => $object->id,
@@ -43,18 +66,11 @@ class MovimentacoesRepository{
                 ];
 }
 
-        private function getSelectMovimentacoes($id = null) {
+        private function getSelectMovimentacoes() {
            $sql = "SELECT * FROM movimentacoes";
-          if($id != null) {
-           $sql .= " WHERE id = ". $id;
-         }
            return $sql;
-}
-
-
-
-
-}
+        }
+    }
 
 
 

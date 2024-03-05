@@ -1,6 +1,8 @@
 <?php
   include_once("HTML/head.php");
   include_once("REPOSITORY/movimetacoesRepository.php");
+include_once("REPOSITORY/produtoRepository.php");
+$produtoRepository = new ProdutoRepository();
   $movimentacoesRepository = new MovimentacoesRepository();
   $movimentacoes = $movimentacoesRepository->getMovimentacoes();
 ?>
@@ -24,6 +26,8 @@
        <th class="col">produto</th>
        <th class="col">qtd</th>
        <th class="col">tipo</th>
+        <th class="col"></th>
+        <th class="col"></th>
       </tr>
     </thead>
   <?php foreach($movimentacoes as $movimentacao){?>   
@@ -37,6 +41,12 @@
         <?php } else{?> 
           <span class="badge bg-danger">Saida</span>
           <?php }?> </td>
+          <td>
+              <a href="editarMovimentacoes.php?id=<?php echo $movimentacao["id"]; ?>" class="btn btn-success">Editar</a>
+          </td>
+          <td>
+              <a href="DELETE/deletarMovimentacoes.php?id=<?php echo $movimentacao["id"]; ?>" class="btn btn-danger">Deletar</a>
+          </td>
       </tr>
    </tbody>
    <?php }?>
