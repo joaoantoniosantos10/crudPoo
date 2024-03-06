@@ -27,4 +27,5 @@
   <?php }else{?>
   <p class='alert alert-danger'> Não encontrou resultados</p>
   <?php }?>
-<?php include_once("HTML/footer.php"); ?>
+<?php include_once("HTML/footer.php");
+exit();?>

@@ -20,7 +20,7 @@ class EstoqueRepository{
     public function getEstoques($nome, $id): array
     {
         #geral
-        $sql = $this->getSelectEstoques($nome,$id);
+        $sql = $this->getSelectEstoques();
         $res = $this->conn->query($sql);
         $estoques = [];
         while($row = $res->fetch_object()){
@@ -56,24 +56,17 @@ class EstoqueRepository{
             JOIN 
                  movimentacoes m on 
                     m.produto_id = p.id
+        WHERE m.deletado is null
            ";
 
-        $filtros = [];
-
-        if (!empty($nome) && empty($id)) {
-            $filtros[] = "p.nome like '%$nome%'";
+        if (!empty($nome) ) {
+            $sql .= "and p.nome like '%$nome%'";
         }
 
-        if (!empty($id) && empty($nome)) {
-            $filtros[] = "p.id = '$id'";
+        if (!empty($id)) {
+            $sql .= "and p.id = '$id'";
         }
-        #caso os dois;
-        if (!empty($id) && !empty($nome)){
-            $filtros[] = "p.nome like '%$nome%' and p.id = '$id'";
-        }
-        if (!empty($filtros)) {
-            $sql .= " WHERE " . implode(" ", $filtros);
-        }
+
 
         $sql.= "GROUP BY p.id, p.nome";
         return $sql;

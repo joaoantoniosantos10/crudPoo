@@ -1,10 +1,15 @@
 <?php
   include_once("HTML/head.php");
   include_once("REPOSITORY/movimetacoesRepository.php");
-include_once("REPOSITORY/produtoRepository.php");
-$produtoRepository = new ProdutoRepository();
+  include_once("REPOSITORY/produtoRepository.php");
+  $produtoRepository = new ProdutoRepository();
   $movimentacoesRepository = new MovimentacoesRepository();
-  $movimentacoes = $movimentacoesRepository->getMovimentacoes();
+  $pagina =(isset($_GET['pagina'])) ? (int)$_GET['pagina'] : 1;
+  $movimentacoes = $movimentacoesRepository->getMovimentacoes($pagina);
+  $quantidade = $produtoRepository->quantidade();
+  include_once("PAGINACAO/paginacao.php");
+
+  include_once("")
 ?>
 
 <div style="padding: 3em;">
@@ -30,8 +35,10 @@ $produtoRepository = new ProdutoRepository();
         <th class="col"></th>
       </tr>
     </thead>
-  <?php foreach($movimentacoes as $movimentacao){?>   
-   <tbody>
+  <?php foreach($movimentacoes as $movimentacao){?>
+      <?php if(empty($movimentacao["deletado"])){  ?>
+
+          <tbody>
       <tr>
         <td> <?php echo $movimentacao["id"];?></td>
         <td> <?php echo $movimentacao["produto_id"];?></td>
@@ -42,12 +49,13 @@ $produtoRepository = new ProdutoRepository();
           <span class="badge bg-danger">Saida</span>
           <?php }?> </td>
           <td>
-              <a href="editarMovimentacoes.php?id=<?php echo $movimentacao["id"]; ?>" class="btn btn-success">Editar</a>
+              <a href="editarMovimentacao.php?id=<?php echo $movimentacao["id"]; ?>" class="btn btn-success">Editar</a>
           </td>
           <td>
-              <a href="DELETE/deletarMovimentacoes.php?id=<?php echo $movimentacao["id"]; ?>" class="btn btn-danger">Deletar</a>
+              <a href="DELETE/deletarMovimentacao.php?id=<?php echo $movimentacao["id"]; ?>" class="btn btn-danger">Deletar</a>
           </td>
       </tr>
+         <?php } ?>
    </tbody>
    <?php }?>
   </table>

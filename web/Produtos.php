@@ -1,10 +1,10 @@
 <?php
 include_once("HTML/head.php");
 include_once("REPOSITORY/produtoRepository.php");
-
 $produtoRepository = new ProdutoRepository();
 $pagina =(isset($_GET['pagina'])) ? (int)$_GET['pagina'] : 1;
 $produtos = $produtoRepository->getProdutos($pagina);
+$quantidade = $produtoRepository->quantidade();
 include_once("PAGINACAO/paginacao.php");
 
 ?>
@@ -49,7 +49,7 @@ include_once("PAGINACAO/paginacao.php");
     if(empty($produtos)){?>
         <p class="alert alert-danger">Não encontrou categorias cadastradas</p>
     <?php }
-    exit();
+
     ?>
 </div>
 
@@ -59,6 +59,7 @@ include_once("HTML/footer.php");
 
 <?php
 include_once("HTML/footer.php");
+exit();
 ?>
 
 

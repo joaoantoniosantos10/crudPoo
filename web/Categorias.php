@@ -1,12 +1,12 @@
   <?php include_once("HTML/head.php");
   include_once("REPOSITORY/categoriaRepository.php");
-  $id = null;
+  $id = $_GET["id"];
+  $nome = $_GET["nome"];
   $categoriaRepository = new CategoriaRepository();
   $pagina =(isset($_GET['pagina'])) ? (int)$_GET['pagina'] : 1;
-  $categorias = $categoriaRepository->getCategorias($pagina); #
-  $quantidade = $categoriaRepository->quantidade(); #COUNT
+  $categorias = $categoriaRepository->getCategorias($pagina,$nome,$id);
+  $quantidade = $categoriaRepository->quantidade();
   include_once("PAGINACAO/paginacao.php");
-
   ?>
 
         <div style="padding: 3em;">
@@ -18,7 +18,23 @@
         </svg>
          </a> </div>
 
-    <table style="padding: 5em;" class="table">
+            <div class ="aside">
+                <form action="Categorias.php" method="get" style="display: flex; justify-content: space-around;" id="filtro">
+
+                    <div style="display:flex; flex-direction:row; gap: 10em;">
+                        <div style="display:flex; flex-direction:column;">
+                            <label for="id" >Id</label>
+                            <input type="number" name="id" id="id">
+                        </div>
+                        <div style="display:flex; flex-direction:column;">
+                            <label for="nome">Nome</label>
+                            <input type="text" name="nome" id="nome">
+                        </div>
+                    </div>
+                    <button class="btn btn-success">Filtrar</button>
+
+
+                    <table style="padding: 5em;" class="table">
         <thead class="table-light">
             <tr>
                 <th scope="col">#</th>
@@ -51,10 +67,10 @@
         if(empty($categorias)){?>
         <p class="alert alert-danger">Não encontrou categorias cadastradas</p>
         <?php }
-        exit();
         ?>
         </div>
 
         <?php
         include_once("HTML/footer.php");
+        exit();
          ?>

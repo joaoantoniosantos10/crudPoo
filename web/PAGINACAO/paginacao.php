@@ -12,9 +12,8 @@ $exibir = 5;
     echo "<a href=\"?pagina=$anterior\">anterior</a> | ";
     ?>
     <?php
-    /**
-     * O loop para exibir os valores à esquerda
-     */
+
+
     for($i = $pagina-$exibir; $i <= $pagina-1; $i++){
         if($i > 0)
             echo '<a href="?pagina='.$i.'"> '.$i.' </a>';

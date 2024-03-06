@@ -18,27 +18,36 @@
     #inserir dados no banco
     public function cadastrarProdutos(
         string $nome,
-         $categoria_id): bool {
+        int $categoria_id): bool {
         $sql = "INSERT INTO produtos ( nome, categoria_id ) VALUES ('$nome', '$categoria_id')";
         return $this->conn->query($sql);
     }
 
         public function editarProdutos(
-            string $nome, int $categoria_id,
-            int $id): bool
-        {
-            $sql = "UPDATE categorias SET nome = '$nome' WHERE id = '$id'";
+            string $nome,
+            int $categoria_id,
+            int $id):
+           bool{
+            $sql = "UPDATE produtos SET nome = '$nome', categoria_id = '$categoria_id' WHERE id = '$id'";
             return $this->conn->query($sql);
         }
+        public function quantidade()
+        {
+            #PAGINACAO
+            $total = "SELECT count(id) as cont FROM produtos";
+            $consulta = $this->conn->query($total);
+            $row = $consulta->fetch_object();
+            $nova = $this->convertObjectToArray($row);
+            return $nova;
+        }
 
-        public function deletarProdutos($id): bool
+         public function deletarProdutos($id): bool
         {
             $sql = "UPDATE produtos SET deletado = '1' WHERE id = '$id'";
             return $this->conn->query($sql);
         }
 
-
-        public function getProdutos($pagina): array{
+         public function getProdutos($pagina): array{
         $sql = $this->getSelectProdutos();
         $res = $this->conn->query($sql);
         #criar array
@@ -49,15 +58,17 @@
         return $produtos;
     }
 
-    private function convertObjectToArray(object $object): array {
+         private function convertObjectToArray(object $object): array {
        return [
         "id" => $object->id,
         "nome" => $object->nome,
-          "deletado" => $object->deletado,
+           "cont" => $object->cont,
+         "categoria_id" => $object->categori_id,
+         "deletado" => $object->deletado,
        ];
     }
 
-   private function getSelectProdutos()
+          private function getSelectProdutos()
     {
         global $pagina;
         if (($pagina != 0) || ($id = null)) {

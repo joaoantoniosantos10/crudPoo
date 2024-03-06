@@ -37,9 +37,9 @@ class CategoriaRepository
     }
 
 
-    public function getCategorias($pagina): array
+    public function getCategorias($pagina,$nome, $id): array
     {
-        $sql = $this->getSelectCategorias();
+        $sql = $this->getSelectCategorias($nome,$id);
         $res = $this->conn->query($sql);
         $categorias = [];
         while ($row = $res->fetch_object()) {
@@ -71,12 +71,14 @@ class CategoriaRepository
     private function getSelectCategorias()
     {
         global $pagina;
+
         if (($pagina != 0) || ($id = null)) {
             $inicio = (5 * $pagina) - 5;
             $sql = "SELECT * FROM categorias  ORDER BY Id LIMIT 5 offset $inicio";
         } else {
             $sql = "SELECT * FROM categorias";
         }
+
         if ($id != null) {
             $sql .= " WHERE id = " . $id;
         }
