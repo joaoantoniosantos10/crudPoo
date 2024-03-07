@@ -4,9 +4,11 @@
   include_once("REPOSITORY/produtoRepository.php");
   $produtoRepository = new ProdutoRepository();
   $movimentacoesRepository = new MovimentacoesRepository();
+  $id = $_GET["id"];
+  $nome = $_GET["nome"];
   $pagina =(isset($_GET['pagina'])) ? (int)$_GET['pagina'] : 1;
-  $movimentacoes = $movimentacoesRepository->getMovimentacoes($pagina);
-  $quantidade = $produtoRepository->quantidade();
+  $movimentacoes = $movimentacoesRepository->getMovimentacoes($pagina, $nome, $id);
+   $quantidade = $movimentacoesRepository->quantidade();
   include_once("PAGINACAO/paginacao.php");
 
   include_once("")
@@ -24,7 +26,24 @@
 </div>
 <hr>
 
-  <table class="table" style="padding: 5em;">
+    <div>
+        <div style="padding: 2em" class ="aside">
+            <form action="movimentacoes.php" method="get" style="display: flex; justify-content: space-around;" id="filtro">
+
+                <div style="display:flex; flex-direction:row; gap: 10em;">
+                    <div style="display:flex; flex-direction:column;">
+                        <label for="id" >Id</label>
+                        <input type="number" name="id" id="id">
+                    </div>
+                    <div style="display:flex; flex-direction:column;">
+                        <label for="nome">Nome</label>
+                        <input type="text" name="nome" id="nome">
+                    </div>
+                </div>
+                <button class="btn btn-success">Filtrar</button></div>
+
+
+        <table class="table" style="padding: 5em;">
    <thead class="table-light">
     <tr>
      <th class="col">#</th>
@@ -35,13 +54,18 @@
         <th class="col"></th>
       </tr>
     </thead>
+
   <?php foreach($movimentacoes as $movimentacao){?>
       <?php if(empty($movimentacao["deletado"])){  ?>
 
           <tbody>
       <tr>
         <td> <?php echo $movimentacao["id"];?></td>
-        <td> <?php echo $movimentacao["produto_id"];?></td>
+        <td> <?php
+               $movimentacao["produto_id"];
+               $produtos = $produtoRepository->getProduto($movimentacao["produto_id"]);
+               echo $produtos["nome"];
+            ?></td>
         <td> <?php echo $movimentacao["qtd"];?></td>
         <td>    <?php if($movimentacao["tipo"] == 1){?>
           <span class="badge bg-success">Entrada</span>
@@ -49,7 +73,7 @@
           <span class="badge bg-danger">Saida</span>
           <?php }?> </td>
           <td>
-              <a href="editarMovimentacao.php?id=<?php echo $movimentacao["id"]; ?>" class="btn btn-success">Editar</a>
+              <a href="editarMovimentacoes.php?id=<?php echo $movimentacao["id"]; ?>" class="btn btn-success">Editar</a>
           </td>
           <td>
               <a href="DELETE/deletarMovimentacao.php?id=<?php echo $movimentacao["id"]; ?>" class="btn btn-danger">Deletar</a>

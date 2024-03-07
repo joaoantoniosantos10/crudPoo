@@ -37,8 +37,9 @@ class CategoriaRepository
     }
 
 
-    public function getCategorias($pagina,$nome, $id): array
+    public function getCategorias($pagina, $nome, $id): array
     {
+
         $sql = $this->getSelectCategorias($nome,$id);
         $res = $this->conn->query($sql);
         $categorias = [];
@@ -48,10 +49,23 @@ class CategoriaRepository
         return $categorias;
     }
 
+    public function forProduct(): array
+    {
+
+        $sql = "SELECT * FROM categorias";
+        $res = $this->conn->query($sql);
+        $categorias = [];
+        while ($row = $res->fetch_object()) {
+            $categorias[] = $this->convertObjectToArray($row);
+        }
+        return $categorias;
+    }
+
+
     public function quantidade()
     {
         #PAGINACAO
-        $total = "SELECT count(id) as cont FROM categorias";
+        $total = "SELECT count(id) as cont FROM categorias WHERE deletado is null";
         $consulta = $this->conn->query($total);
         $row = $consulta->fetch_object();
         $nova = $this->convertObjectToArray($row);
@@ -68,20 +82,28 @@ class CategoriaRepository
         ];
     }
 
-    private function getSelectCategorias()
-    {
+    private function getSelectCategorias(){
         global $pagina;
+        global  $nome;
+        global $id;
+        # echo $pagina." ".$nome." ".$id;
+        $inicio = (5 * $pagina) - 5;
+#ok
+        $sql = "SELECT * FROM categorias c
+                    WHERE deletado is null";
 
-        if (($pagina != 0) || ($id = null)) {
-            $inicio = (5 * $pagina) - 5;
-            $sql = "SELECT * FROM categorias  ORDER BY Id LIMIT 5 offset $inicio";
-        } else {
-            $sql = "SELECT * FROM categorias";
+        if (!empty($nome)){
+            $sql .= " and nome like '%$nome%'";
         }
 
-        if ($id != null) {
-            $sql .= " WHERE id = " . $id;
+        if (!empty($id)) {
+            $sql .= " and id = '$id'";
         }
+
+        if (empty($id) && (empty($nome))) {
+            $sql .= " ORDER BY id LIMIT 5 offset $inicio";
+        }
+
         return $sql;
     }
 }

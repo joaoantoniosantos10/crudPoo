@@ -1,8 +1,8 @@
   <?php include_once("HTML/head.php");
   include_once("REPOSITORY/categoriaRepository.php");
+  $categoriaRepository = new CategoriaRepository();
   $id = $_GET["id"];
   $nome = $_GET["nome"];
-  $categoriaRepository = new CategoriaRepository();
   $pagina =(isset($_GET['pagina'])) ? (int)$_GET['pagina'] : 1;
   $categorias = $categoriaRepository->getCategorias($pagina,$nome,$id);
   $quantidade = $categoriaRepository->quantidade();
@@ -18,22 +18,21 @@
         </svg>
          </a> </div>
 
-            <div class ="aside">
-                <form action="Categorias.php" method="get" style="display: flex; justify-content: space-around;" id="filtro">
+            <div>
+                <div style="padding: 2em" class ="aside">
+                    <form action="Categorias.php" method="get" style="display: flex; justify-content: space-around;" id="filtro">
 
-                    <div style="display:flex; flex-direction:row; gap: 10em;">
-                        <div style="display:flex; flex-direction:column;">
-                            <label for="id" >Id</label>
-                            <input type="number" name="id" id="id">
+                        <div style="display:flex; flex-direction:row; gap: 10em;">
+                            <div style="display:flex; flex-direction:column;">
+                                <label for="id" >Id</label>
+                                <input type="number" name="id" id="id">
+                            </div>
+                            <div style="display:flex; flex-direction:column;">
+                                <label for="nome">Nome</label>
+                                <input type="text" name="nome" id="nome">
+                            </div>
                         </div>
-                        <div style="display:flex; flex-direction:column;">
-                            <label for="nome">Nome</label>
-                            <input type="text" name="nome" id="nome">
-                        </div>
-                    </div>
-                    <button class="btn btn-success">Filtrar</button>
-
-
+                        <button class="btn btn-success">Filtrar</button></div>
                     <table style="padding: 5em;" class="table">
         <thead class="table-light">
             <tr>
@@ -44,7 +43,8 @@
             </tr>
         </thead>
 
-        <?php foreach($categorias as $categoria){ ?>
+        <?php
+        foreach($categorias as $categoria){ ?>
         <tbody>
          <?php if(empty($categoria["deletado"])){  ?>
 
@@ -60,7 +60,9 @@
              </tr>
 
          <?php }?>
+
         </tbody>
+
          <?php } ?>
        </table>
         <?php

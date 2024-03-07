@@ -6,9 +6,9 @@ try{
      $tipo = $_POST["tipo"];
      $movimentacoesRepository = new MovimentacoesRepository();
      $cadastrar = $movimentacoesRepository->cadastrarMovimentacoes($produto_id, $qtd, $tipo);
-    echo  "<script> alert('Cadastrado com  sucesso');</script>";
-    echo "<script>location.href='../movimentacoes.php';</script>";
+    #echo  "<script> alert('Cadastrado com  sucesso');</script>";
+   # echo "<script>location.href='../movimentacoes.php';</script>";
     }catch(Exception $e){
-    echo "<script> alert('Ops! Ocorreu algum erro');</script>";
-    echo "<script>location.href='../cadastrarMovimentacoes.php';</script>";
+    #echo "<script> alert('Ops! Ocorreu algum erro');</script>";
+   # echo "<script>location.href='../cadastrarMovimentacoes.php';</script>";
     }

@@ -2,7 +2,7 @@
       include_once("REPOSITORY/categoriaRepository.php");
       $categoriaRepository = new CategoriaRepository();
     $pagina =0;
-    $categorias = $categoriaRepository->getCategorias($pagina);
+    $categorias = $categoriaRepository->forProduct();
 ?>
 
 <?php if(!empty($categorias)){ ?>

@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="CSS/main.css">
     </head>
-    <body>
+    <body >
     <?php include_once("./CONNECTION/DatabaseConnection.php");?>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">

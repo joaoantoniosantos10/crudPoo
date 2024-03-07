@@ -3,15 +3,14 @@
  include_once("REPOSITORY/produtoRepository.php");
  include_once("REPOSITORY/ENUM/tipoMovimentacaoEnum.php");
   $produtoRepository = new ProdutoRepository();
-  $pagina = 0;
- $produtos = $produtoRepository->getProdutos($pagina);
+  $produtos = $produtoRepository->forMovimentacoes();
 ?>
 
-<?php if(!empty($produtos)) {?>
+<?php if(empty($produtos["id"])) {?>
 
     <form style="padding: 2em;" action="SALVAR/salvarMovimentacao.php" method="post">
-    <select required ="form-control mb-3" name="produto_id" id="">
-    <option selected> Selecione o produto </option>
+    <select required ="form-control mb-3" name="produto_id">
+    <option disabled selected> Selecione o produto </option>
     <?php
     foreach($produtos as $produto){ ?>
         <option value="<?php echo $produto['id'];?>"><?php echo $produto['nome'];?></option>
@@ -26,12 +25,11 @@
     <option selected> Tipo de Movimentação </option>
     <option value="<?php echo TipoMovimentacaoEnum::ENTRADA?>" selected> Entrada</option>
     <option value="<?php echo TipoMovimentacaoEnum::SAIDA ?>" selected> Saida</option>
-    <button class="btn btn-primary" type="submit ">Cadastrar</button>
     </select>
 
     <button class="btn btn-primary" type="subtmit">Cadastrar</button>
         </form>
- 
+
 
 <?php } ?>
 
