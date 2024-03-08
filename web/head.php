@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="CSS/main.css">
     </head>
-    <body >
+    <body>
     <?php include_once("CONNECTION/DatabaseConnection.php");?>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
@@ -23,16 +23,16 @@
     <li class="nav-item">
   
     <li class="nav-item">
-    <a class="nav-link" href="Categorias.php">Categorias</a>
+    <a class="nav-link" href="../Categorias.php">Categorias</a>
     </li>
     <li class="nav-item">
-    <a class="nav-link" href="Produtos.php">Produto</a>
+    <a class="nav-link" href="../Produtos.php">Produto</a>
     </li>
     <li class="nav-item">
-    <a class="nav-link" href="movimentacoes.php">Movimentações</a>
+    <a class="nav-link" href="../movimentacoes.php">Movimentações</a>
     </li>
     <li class="nav-item">
-    <a class="nav-link" href="estoque.php">Estoque</a>
+    <a class="nav-link" href="../estoque.php">Estoque</a>
     </li>
     </ul>
    </div>

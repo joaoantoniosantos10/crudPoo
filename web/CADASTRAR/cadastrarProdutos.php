@@ -1,5 +1,5 @@
-<?php include_once("HTML/head.php");
-      include_once("REPOSITORY/categoriaRepository.php");
+<?php include_once("../head.php");
+include_once("../index.php");
       $categoriaRepository = new CategoriaRepository();
     $pagina =0;
     $categorias = $categoriaRepository->forProduct();
@@ -7,7 +7,7 @@
 
 <?php if(!empty($categorias)){ ?>
 
-  <form style="padding: 4em;" action="SALVAR/salvarProdutos.php" method="POST">
+  <form style="padding: 4em;" action="../SALVAR/salvarProdutos.php" method="POST">
 
 <div class="row mb-3">
 
@@ -27,5 +27,5 @@
   <?php }else{?>
   <p class='alert alert-danger'> Não encontrou resultados</p>
   <?php }?>
-<?php include_once("HTML/footer.php");
+<?php include_once("../footer.php");
 exit();?>

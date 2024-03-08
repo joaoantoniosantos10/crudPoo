@@ -1,14 +1,13 @@
 <?php
- include_once("HTML/head.php");
- include_once("REPOSITORY/produtoRepository.php");
- include_once("REPOSITORY/ENUM/tipoMovimentacaoEnum.php");
+ include_once("../head.php");
+include_once("../index.php");
   $produtoRepository = new ProdutoRepository();
   $produtos = $produtoRepository->forMovimentacoes();
 ?>
 
 <?php if(empty($produtos["id"])) {?>
 
-    <form style="padding: 2em;" action="SALVAR/salvarMovimentacao.php" method="post">
+    <form style="padding: 2em;" action="../SALVAR/salvarMovimentacao.php" method="post">
     <select required ="form-control mb-3" name="produto_id">
     <option disabled selected> Selecione o produto </option>
     <?php
@@ -34,5 +33,5 @@
 <?php } ?>
 
 
-<?php include_once("HTML/footer.php"); ?>
+<?php include_once("../footer.php"); ?>
 

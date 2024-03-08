@@ -1,6 +1,6 @@
-<?php include_once("HTML/head.php");?>
+<?php include_once("../head.php");?>
 
-<form style="display: flex; justify-content: center; flex-direction:column; align-items:center; gap: 6em; " action="SALVAR/salvarCategorias.php" method="post">
+<form style="display: flex; justify-content: center; flex-direction:column; align-items:center; gap: 6em; " action="../SALVAR/salvarCategorias.php" method="post">
 
 <h1>Cadastrar Categorias</h1>
 <div style="display: flex; justify-content:center;" class="row mb-3">
@@ -13,5 +13,5 @@
 </div>
 </form>
 
-<?php include_once("HTML/footer.php");?>
+<?php include_once("../footer.php");?>
 

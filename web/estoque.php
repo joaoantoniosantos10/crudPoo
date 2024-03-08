@@ -59,5 +59,3 @@ $estoques = $estoqueRepository->getEstoques($nome,$id);
         <?php
         include_once("HTML/footer.php");
          ?>
-<!--Retornar uma listagem com base-->
-<?php include_once("HTML/footer.php"); ?>

@@ -1,5 +1,5 @@
 <?php
-    include_once ("../includes.php");
+    include_once ("../index.php");
     $produtoRepository = new ProdutoRepository();
 try{
 
@@ -12,6 +12,6 @@ try{
 } catch (Exception $e){
     echo $e;
     echo  "<script> alert('Ocorreu algum  erro');</script>";
-   echo "<script>location.href='../editarProdutos.php';</script>";
+   echo "<script>location.href='../EDITAR/editarProdutos.php';</script>";
 }
 ?>

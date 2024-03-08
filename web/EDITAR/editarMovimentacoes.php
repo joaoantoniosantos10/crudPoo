@@ -1,19 +1,16 @@
 <?php
-include_once("HTML/head.php");
-include_once("REPOSITORY/produtoRepository.php");
-include_once("REPOSITORY/ENUM/tipoMovimentacaoEnum.php");
-include_once("REPOSITORY/movimetacoesRepository.php");
+include_once("../head.php");
+include_once("../index.php");
 $produtoRepository = new ProdutoRepository();
-$pagina = 0;
-$produtos = $produtoRepository->getProdutos($pagina);
+$produtos = $produtoRepository->forMovimentacoes();
+$quantidade = $produtoRepository->quantidade();
  $id = $_GET["id"];
 $movimentacoes = new MovimentacoesRepository();
 $setar = $movimentacoes->getMovimentacao($id);
-?>
+echo $quantidade["cont"];
+ if(!empty($quantidade["cont"])){?>
 
-<?php if(!empty($produtos)) {?>
-
-    <form style="padding: 2em;" action="SALVAR/salvarEdicaoMovimentacoes.php" method="post">
+    <form style="padding: 2em;" action="../SALVAR/salvarEdicaoMovimentacoes.php" method="post">
         <input type="hidden" name="id" value="<?php echo $id = $_GET["id"]; ?>" >
         <select required ="form-control mb-3" name="produto_id" id="">
             <option value="" disabled selected> Selecione o produto </option>
@@ -29,8 +26,8 @@ $setar = $movimentacoes->getMovimentacao($id);
 
         <select required ="form-control mb-3" name="tipo" id="tipo ">
             <option disabled value =""
-              selected ><?php if($setar["tipo"] == 1){
-              echo "Entrada";}
+                    selected ><?php if($setar["tipo"] == 1){
+                    echo "Entrada";}
                 else{ echo "Saida";} ?>  </option>
             <option value="<?php echo TipoMovimentacaoEnum::ENTRADA?>" > Entrada</option>
             <option value="<?php echo TipoMovimentacaoEnum::SAIDA ?>" > Saida</option>
@@ -41,6 +38,6 @@ $setar = $movimentacoes->getMovimentacao($id);
     </form>
 <?php  }
 
-include_once("HTML/footer.php"); ?>
+include_once("../footer.php"); ?>
 
 

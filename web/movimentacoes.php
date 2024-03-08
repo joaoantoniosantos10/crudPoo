@@ -18,7 +18,7 @@
 <hr style="color: white;">
 <div style="display: flex; justify-content: space-between; align-items:center; padding: 1em;">
     <h1>Movimentações</h1>
-<a href="cadastrarMovimentacao.php">
+<a href="CADASTRAR/cadastrarMovimentacao.php">
     <svg style="color: green;" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
     <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0"/>
     </svg>
@@ -73,7 +73,7 @@
           <span class="badge bg-danger">Saida</span>
           <?php }?> </td>
           <td>
-              <a href="editarMovimentacoes.php?id=<?php echo $movimentacao["id"]; ?>" class="btn btn-success">Editar</a>
+              <a href="EDITAR/editarMovimentacoes.php?id=<?php echo $movimentacao["id"] ?>" class="btn btn-success">Editar</a>
           </td>
           <td>
               <a href="DELETE/deletarMovimentacao.php?id=<?php echo $movimentacao["id"]; ?>" class="btn btn-danger">Deletar</a>
@@ -87,6 +87,7 @@
   if(empty($movimentacoes)){?>
   <p class="alert alert-danger"> Não encontrou categorias cadastradas</p>
   <?php }
-  exit(); ?> 
+ ?>
 </div>
-<?php include_once("HTML/footer.php"); ?>
+<?php include_once("HTML/footer.php");
+exit(); ?>
